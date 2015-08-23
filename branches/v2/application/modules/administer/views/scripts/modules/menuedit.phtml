@@ -1,0 +1,98 @@
+<?
+$this->placeholder('page_title')->set('Edit Menu');
+$this->dojo()->requireModule('dojo.data.ItemFileWriteStore')
+->requireModule('dijit.tree.ForestStoreModel')
+->requireModule('dijit.Tree')
+->requireModule('dijit._tree.dndSource')
+->requireModule('dijit.form.Button')
+->requireModule('dijit.layout.BorderContainer')
+->requireModule('dijit.layout.ContentPane')
+->requireModule('dojo.parser')
+->setDjConfigOption('parseOnLoad', TRUE);
+
+$form = new Administer_Form_Zupalmenus();
+$form->setAttrib('id', 'menu_form');
+$form->setName('menu_form');
+$form->setAction($this->baseUrl() . DS . 'administer' . DS . 'modules' . DS . 'menueditexecute');
+
+$this->headScript()->appendFile('/scripts/multiple-select-functions.js');
+$this->headScript()->appendFile('/scripts/administer/menu_edit.js');
+
+$this->headLink()->appendStylesheet($this->baseUrl() . '/style/administer/menu_style.css');
+?>
+<?php $this->headStyle()->captureStart() ?>
+<?= str_replace('[BASE_URL]', $this->baseUrl(), file_get_contents(realpath(dirname(__FILE__) .'/../../../style/menu_style.css'))) ?>
+<?php $this->headStyle()->captureEnd() ?>
+<div dojoType="dojo.data.ItemFileWriteStore"
+     url="<?=$this->baseUrl() ?>/administer/modules/menustore"
+     jsId="menu_tree_data"
+     >
+</div>
+
+<div dojoType="dijit.tree.ForestStoreModel"
+     rootLabel="Menus"
+     rootId="0"
+     store="menu_tree_data"
+     childrenAttrs="children"
+     jsId="menu_tree_model"
+
+     DNDMode="both"
+     DNDAcceptTypes="['myNewTreeWidget']"
+     >
+</div>
+<div dojoType="dijit.layout.BorderContainer" style="width: 800px; height: 600px"
+     gutters="false" id="menu_edit_frame">
+    <div dojoType="dijit.layout.ContentPane" region="center" style="width: 40%">
+<div dojoType="dijit.Tree" 
+     id="menu_tree"
+     model="menu_tree_model">
+    <script type="dojo/method" event="onClick" args="item">
+        last_menu_selected = item;
+        if (item.id)
+            {
+                update_menu_form(item);
+            }
+    </script>
+</div>
+    </div>
+    <div dojoType="dijit.layout.ContentPane" region="right" style="width: 60%"   id="form_panel">
+
+            <div dojoType="dijit.form.Button">
+                Add Submenu
+                <script type="dojo/method" event="onClick" args="evt">
+                    if (last_menu_selected)
+                        {
+                            var f = document.forms['menu_form'];
+                            var w = dojo.byId('created_by_module_note');
+                            w.innerHTML = 'Add new menu item under item ' + last_menu_selected.label;
+
+                            var id = last_menu_selected.id;
+                            f.elements['id'].value = 0;
+                            f.elements['label'].value = '';
+                            f.elements['name'].value = '';
+                            f.elements['parent'].value = id;
+                            f.elements['controller'].value = '';
+                            f.elements['action'].value = '';
+                            f.elements['href'].value = '';
+                            f.elements['parameters'].value = '';
+                            f.elements['callback_class'].value = '';
+
+                            dojo.query('#if_module').forEach(
+                            function(i){i.checked = false; }
+                            ); //
+                            dojo.query('#if_controller').forEach(
+                            function(i){i.checked = false; }
+                            ); 
+                            var res_select = f.elements['resource'];
+                            res_select.selectedIndex = 0;
+                            var mod_select = f.elements['menumodule'];
+                            mod_select.selectedIndex = 0;
+                        }
+                </script>
+            </div>
+        <div id="created_by_module_note" style="color: #FF000; font-family: Arial, Helvetica, sans-serif; font-size: 80%">
+        </div>
+            <?= $form ?>
+    </div>
+
+</div>

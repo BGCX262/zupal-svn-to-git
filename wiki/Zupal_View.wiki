@@ -1,0 +1,52 @@
+#summary The Visual resources for this page
+#labels Featured,view
+
+= Introduction =
+
+At this stage most of the visual systems of Zupal are simply utilization of the existing Zend resources. Unlike the rest of Zupal, which takes the open ended components of ZF and frames them in a more finished set of systems, the view based resources of Zupal are optional. 
+
+The only absolute requirement of Zupal is its implementation of the Zend_Layout. When complete this system will allow for downloadable self contained templates. 
+
+== The Menu System ==
+
+The current menu system is fairly brutal; there is a single navigation menu that lists all the current modules and a submenu (optional) that is defined by a menu config file in the menu root that appears whenever a module's action is called. Further development will tie menus to the ACL system as it develops. 
+
+*NOTE*: the Menu System will be replaced with Zend_Navigation constructs ASAP
+
+== Customizing the Layout for Context. ==
+
+There are two stock elements in the view placeholder context: breadcrumb and page_title. 
+Each view should set the page title and optionally append items to the breadcrumb. (the breadcrumb is currently satisfied with another use of the Zupal_Menu class at present.) 
+
+Here is an example of customizing the placeholders in a view script:
+
+{{{
+$this->placeholder('page_title')->set($this->content->title());
+breadcrumb = $this->placeholder('breadcrumb');
+$breadcrumb = $breadcrumb[0];
+$breadcrumb->set_item($this->content->title()); 
+// note -- this is a static text item in the breadcrumb 
+// and will not be clickable. 
+$this->placeholder('breadcrumb')->set($breadcrumb);
+}}}
+
+
+== Layouts == 
+
+The current system is locked into a single default layout; a Zupal_Templates system is to come. 
+
+== Helpers ==
+
+=== link($pTitle, $pParams) ===
+
+This helper generates a hyperlinked text or icon element. $pParams is an array of path items -- module, controller, action, (css) class, title; many of these have defaults. Note that there are a set of icons in the folder pubic/img/icons that can be referred to in shorthand; for instance a title value of '(x)' will create a linked delete icon. 
+
+Note: this helper respects the getBasePath() property of the Zend_Controller_Front() singleton. 
+
+= Data Grids =
+
+By connecting the Dojo Grid to the Domain system, Zupal allows for a very substantial list and detail system. Very fast and flexible grids can be presented and their layout and data cached for rapid presentation. 
+
+= Images, Icons and Links =
+
+There is a compact set of classes for rendering linked icons etc. These are intended for simple links and buttons but might be useful for a gallery system as well. There are also a set of CRUD icons in the public/img/icons folder. 

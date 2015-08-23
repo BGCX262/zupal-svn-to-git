@@ -1,0 +1,49 @@
+#summary The class for link lists
+#labels menu,Phase-Design
+
+= Introduction =
+
+The Zupal_Menu package is a basic system for lists of links. It will become more interesting has hooks back to modules and ACL are embedded. 
+
+It is *COMPLETELY ReDUNDANT* with Zend_Navigation and will be deprecated ASAP.
+
+= Details =
+
+The Zupal_Menu_IMenu interface is pretty open:
+
+{{{
+Interface Zupal_Menu_IMenu
+{
+
+	public function __construct($pTitle = '', $pData = NULL);
+	
+	public function set_item($pItem, $pID = NULL);
+
+	/**
+	 * returns the menu's HTML markup as a string.
+	 */
+	public function __toString();
+}
+}}}
+
+Menu items can be strings, objects with __toString() functionality, or other menus. Note that the Zupal_Menu_Item clas is designed to serve as a menu item and has a specialized hook, a list_class property, that the core menu class uses to alter the list tag that encases the item. (this is the mechanism that highlights the current item.)
+
+= Uses =
+
+You can use the Menu module anywhere you need a list of links; in fact if you are truly lazy you can use it to generate an unordered list of anything you like. It is currently used to generate the main navigation and the breadcrumb. 
+
+The Zupal_Menu_Item class can render a link in any context you like -- its not dependent on being embedded in a menu and has no introspection to its context. The Link view helper is also useful in this role, but the ZM_Item class can be used in any context. This can be useful to insulate you against installation of Zupal in a subfolder of a web server (I.e., with a base path); although this is the exception, Zend Framework projects (and by extension, Zupal projects) can function without being installed in the root of a domain, but this changes the value of Zend_Controller_Front::getInstance()->getBasePath(), which is embedded in Zupal_Menu_Item (and the link helper.)
+
+= Execution =
+
+The menu class outputs an ordered list of its items; the ol tag has a menu class as a CSS hook. 
+
+It is __toString() compatible, meaning, you simply echo it as if it were a scalar and it renders in markup. 
+
+{{{
+$m = new Zupal_Menu("My Menu", array($link_1, $link_2, $link_3));
+echo $m;
+// or simply ... 
+?>
+<?= $m ?>
+}}}

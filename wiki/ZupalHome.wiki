@@ -1,0 +1,43 @@
+#summary The genesis and guide to Zupal
+#labels Home,Featured
+
+"What would the wheel look like if it had been invented by the Japanese?"
+
+= Components =
+
+  * [ZupalModel The Zupal Model] --  the data interchange system -- Dave
+  * ZupalModules -- The module management system -- Fred
+
+= Introduction =
+
+I've been attending a lot of Drupal meetings, and have come to the conclusion that Drupal is probably the strongest CMS out there because it goes beyond being a content management system and is actually an application platform -- and one that makes a darn good CMS.
+
+Zend, my current "Go-to" framework, cannot compete with Drupal because it is not trying to; it is a developers toolset made for hands-on coders, where Drupal strives to provide a set of lego-like systems that anyone can use to produce a site through administrative acumen. 
+
+It was designed by coders, for coders, to be as loosely coupled and implementation agnostic as possible. I think this is both its greatest strength and gretest weakness. Nobody would ever suggest that a lay person download Zend and throw up a CMS: there is just no "there" there -- no layouts (though there is a layout component), no modules (in the sense of, "lets drop this module folder into our app so we can have a bulletin board") and no administrative toolset (though the tools exist for user authentication, ACL, etc., they are not bound into a unified implementation.
+
+Further the lack of presumptions in Zend also means that each ZF-backed system is unique; where the ZF components are designed to be usable as toolsets, there is not a single "complete" module in the mix. 
+
+Zupal is an attempt to make a fully usable set of components that can be used to assemble a blog, CMS, or storefront. Being strongly grounded in the Zend system of development, and using Drupal as a design template, Zupal provides a set of fleshed out and reusable modules. The distinction between a reusable module (in the Drupal sense) and the reusable components of the ZF itself is important. A module is a complete, useful system that is independent and fully functional. Modules can be extended, linked and altered, of course, to suit a client but they should be complete enough to solve the 80-90% use cases; of course the reality will be, they solve the use cases that the designer intends to solve...
+
+
+= The Component System = 
+
+http://wonderlandlabs.com/wll_drupal/sites/default/files/Components.gif
+
+The hierarchy lines here are not that meaningful as these components would interact in a pretty open-ended way.
+
+Zupal_Project would be an initializer plugin that prepares the overall Zend project for loading.
+
+Zupal_Modules are contained folders with the core module class, the node classes that they contain, and the views they use. They would be able to load all their included files via a method, to obviate the need to work within the constraints of the autoloader. Zend's modules would probably serve as a superstructure for Zupal modules as they have model and view data. What they lack is any self-installation functionality and a built in interoperability system (the node thing).
+
+Zupal_Admin aggregates all the interfaces of the component modules, and a module loader, enabler, etc. Each module has an admin controller that is accessible through the administrative UI.  
+
+Zupal_People is a toolset for creation of user management, address books, CRM, etc. 
+
+
+[ZupalModel Zupal_Nodes] are the atomic unit of information in the system. They relate to other nodes via links and have identity, content (in the properties aggregate) and association with a particular module.
+
+The Admin system would be a Zend module meant to aggregate the Zupal modules' functionality -- as such, swapping out a custom admin implementation should be a relatively approachable task, as the bulk of the requisite handlers would be behind the API of each module.
+
+Many existing components such as Zend_Layout, Zend_DB and Zend_Form can probably be used whole cloth, with some node-based adaptation. 

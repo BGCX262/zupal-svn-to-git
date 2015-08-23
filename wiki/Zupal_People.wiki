@@ -1,0 +1,32 @@
+#summary Oh the Humanity!
+#labels Phase-Requirements,people
+
+As I've detailed on http://wonderlandlabs.com/wll_drupal/refactoring_humanity.html, far too many systems overload the concept of people with functional specifications. Because of this I am including a model for people in Zupal that does not presume anything about the nature of the people in terms of role, context or other metadata.
+
+People in Zupal may be leads, users, customers, celebrities, etc. they are not, in fact, content nodes, but a more general resource types. Little more than their names and email addresses are stored in the people table. (for convenience the username/password has been denormalized to the table but that might not stick.) 
+
+Every other piece of information about a person is normalized; phone numbers, addresses, etc. 
+
+I am flipping a coin as to whether or not to associate users as a separate table or simply allocate all privileges to people; i.e., is "User" functionality worth a unique and separate frame of reference, or are users just people with privileges? My gut is leaning that way. 
+
+Having the entity of people being a reusable component should save some time when extending functionality into areas like e-commerce. Creating a customer domain just means defining a business centric table linked to the person, and a set of decorated addresses (billing, shipping, work) with that customer. 
+
+Similarly, a lead is simply a person who has a relationship with (optionally) their company and their representative. 
+
+This should improve archiving and updating of personal records. If a lead changes addresses, just archive their home address and add a new one. 
+
+De-duplication can also be done at the atomic level. You can prevent creation of identical addresses and flagged as a possible duplicate. 
+
+You can also group addresses into location areas or grids for marketing purposes. 
+
+Note that people are not currently considered nodes. The likelihood of the people system being used for lead gen means that a huge swath of anonymous content is going to be stored in the people table, and we don't want that blowing back to the node table. "People Pages" will probably include a separate resource table which will be noded. 
+
+I might flip on this and add People to the roster of things that get nodes if it turns useful. 
+
+== Usage ==
+
+People are not noded content. However the people table functions as its own dimension of nodes in their own way. The People module is intended as a potential resource for people related systems like CRMs, contract books and family albums; however its first usage will be for the user management system. 
+
+== Current Status ==
+
+People can be made and listed in the people module. An acctual login and ACL season is TBD. 

@@ -1,0 +1,32 @@
+<?
+
+$this->placeholder('page_title')->set('Page Admin');
+
+echo $this->dojostore('page_store', $this->baseUrl() . '/admin/pages/pagesstore');
+
+echo $this->dojogrid('page_grid', 'page_store'
+    , new Zend_Config_Ini(dirname(__FILE__) . '/page_grid.ini', 'columns'), 'id', NULL,
+    array('width' => '50em', 'height' => '80em'));
+
+$this->headScript()->captureStart()
+?>
+function page_grid_edit_formatter(id)
+{
+    return '<a href="/admin/pages/edit/id/' + id + '"><img src="/images/icons/edit.gif" border="0" width="20" height="20"></a>';
+}
+
+function page_grid_delete_formatter(id)
+{
+    return '<a href="/admin/pages/delete/id/' + id + '"><img src="/images/icons/x.gif" border="0" width="20" height="20"></a>';
+}
+function page_grid_view_formatter(id)
+{
+    return '<a href="/page/' + id + '"><img src="/images/icons/view.gif" border="0" width="20" height="20"></a>';
+}
+
+function page_grid_addlinked_formatter(id)
+{
+    return '<a href="/admin/pages/addlinked/id/' + id + '"><img src="/images/icons/add.gif" border="0" width="20" height="20"></a>';
+
+}
+<? $this->headScript()->captureEnd();

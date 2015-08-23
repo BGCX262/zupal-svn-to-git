@@ -1,0 +1,180 @@
+body
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+div#menu
+{
+    float: left;
+    width: 200px;
+    border: 2px solid gray;
+    margin: 4pt;
+}
+
+div#user_menu ul,
+div#menu ul
+{
+    margin: 0px;
+    padding: 0px;
+}
+
+div#user_menu li,
+div#menu li
+{
+    margin: 0px;
+    padding: 0px;
+    padding-left: 1em;
+    list-style: none
+}
+
+
+div#menu li a,
+div#menu li a.link,
+div#menu li a.visited
+{
+    font-family: Arial;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+div#user_menu h1
+{
+    font-size: 100%;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 1em;
+}
+
+div#user_menu ul.navigation,
+div#user_menu ul.navigation li
+{
+    display: inline;
+}
+
+#main
+{
+    float: left;
+    width: 800px;
+}
+
+#main fieldset
+{
+    border: 1px solid #CF0;
+    margin-bottom: 1em;
+    padding: 1em;
+}
+
+#main fieldset fieldset
+{
+    border-color: #999;
+    padding: 0.5em
+}
+#main fieldset legend
+{
+    font-size: 150%;
+    color: #999;
+}
+
+table.frame
+{
+    border: 2px solid gray;
+    margin: 1em;
+    background-color: #990000;
+
+}
+
+div#main table.frame td,
+div#main table.frame th
+{
+    margin: 0px;
+    padding: 0.5em;
+    text-align: left;
+    vertical-align: top;
+}
+div#main table.frame th
+{
+    background-color: #600;
+    font-weight: bold;
+}
+
+div#main table.frame th.r,
+div#main table.frame td.r
+{
+    border-right: 1px solid gray;
+}
+
+a.linkbutton,
+a.linkbutton:link,
+a.linkbutton:visited
+{
+    font-family: Helvetica, Arial, sans-serif;
+    display: inline-block;
+    padding: 2px;
+    border: 1px solid gray;
+    margin: 2px;
+    margin-left: 4px;
+    margin-right: 4px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #006;
+    background-color: #E1E1E1;
+}
+
+a.linkbutton:hover
+{
+    background-color: black;
+    color: white;
+}
+
+
+ .dojoxGrid,
+ .dojoxGrid div, /*
+ div.dojoxGrid div td,
+ div.dojoxGrid div th,*/
+ .dojoxGrid div table,
+ .dojoxGrid div tbody
+{
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+ .dojoxGrid .dojoxGridRowOdd
+{
+    background-color: #CCCCCC
+}
+
+ .dojoxGridRowOdd table
+{
+    background-color:#E1E1E1
+}
+ .dojoxGrid .dojoxGridCell
+{
+    border-right: 1px solid #999;
+    padding: 2px;
+    padding-left: 4px;
+    padding-right: 5px;
+    border-top: none;
+    border-left: none;
+    text-align: left;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    font-size: 12pt;
+}
+
+dt
+{
+    font-weight: bold;
+    width: 150px;
+    float: left;
+    margin: 1em;
+    display:block;
+}
+
+dd
+{
+    margin: 1em;
+    clear: right;
+    display:block;
+}

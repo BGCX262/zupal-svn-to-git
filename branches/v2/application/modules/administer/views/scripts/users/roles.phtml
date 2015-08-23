@@ -1,0 +1,20 @@
+<?
+$this->placeholder('page_title')->set('Users : Roles');
+
+$this->headScript()->captureStart();
+?>
+function roles_grid_edit_formatter(p)
+{
+    return '<a href="<?= $this->baseUrl() ?>/administer/users/rolesedit/role_id/'
+        + p + '"><img src="<?= $this->baseUrl() ?>/images/icons/edit.gif" border="0"/></a>';
+}
+
+<?
+    $this->headScript()->captureEnd();
+    $columns = new Zend_Config_Ini(dirname(__FILE__) . '/roles_grid.ini','columns');
+?>
+
+<?= $this->dojostore('roles_store', $this->baseUrl() . '/administer/users/rolesstore') ?>
+<?= $this->dojogrid('roles', 'roles_store', $columns->toArray(), 'role_id') ?>
+
+<a href="<?= $this->baseUrl() ?>/administer/users/rolesnew" class="linkbutton">Add Role</a>
